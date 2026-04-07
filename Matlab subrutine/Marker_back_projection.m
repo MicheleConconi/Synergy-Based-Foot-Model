@@ -1,0 +1,69 @@
+function [new_MK_ana] = Marker_back_projection(MK_2b_proj,x,SYN)
+%the function take a set of markers in a given posture and retroprojected them
+% back in the anatomical reference system of the corresponding bone 
+% return the new anatomical markers
+%
+% INPUT
+% x = vector of foot and ankle posture (10X1)
+%   x(1:6) represent the pose of the tibia
+%   x(7) is the coefficient of the ankle sinergy
+%   x(8:10) are the coefficients of the foot sinergies
+%   x(11) are the toe flexion 
+%
+% MK_2b_proj = a structure containing the coordinates of the markers in
+%                   actual posture
+%
+% SYN = a structure containing the scaled sinergies
+%
+% OUTPUT
+% new_MK_ana = a vector containing the new anatomical marker set
+
+
+%tibia
+T_TI2G=T_Move2Position_foot([x(1) x(2) x(3) x(4) x(5) x(6)],true);
+
+%ankle
+p_ankle=(SYN.u_ankle + x(7)*SYN.v_ankle)';
+%foot
+p_foot=(SYN.u_foot + x(8)*SYN.v1_foot + x(9)*SYN.v2_foot + x(10)*SYN.v3_foot)';
+%toes
+p_toes=(SYN.u_toes + x(11)*SYN.v_toes)';
+
+T_TATI = T_Move2Position_foot(p_ankle(1:6),false);
+T_FITI = T_Move2Position_foot(p_ankle(7:12),false);
+T_CATA = T_Move2Position_foot(p_foot(1:6),false);
+T_NATA = T_Move2Position_foot(p_foot(7:12),false);
+T_CUNA = T_Move2Position_foot(p_foot(13:18),false);
+T_CMNA = T_Move2Position_foot(p_foot(19:24),false);
+T_CINA = T_Move2Position_foot(p_foot(25:30),false);
+T_CLNA = T_Move2Position_foot(p_foot(31:36),false);
+T_M1NA = T_Move2Position_foot(p_foot(37:42),false);
+T_M2NA = T_Move2Position_foot(p_foot(43:48),false);
+T_M3NA = T_Move2Position_foot(p_foot(49:54),false);
+T_M4NA = T_Move2Position_foot(p_foot(55:60),false);
+T_M5NA = T_Move2Position_foot(p_foot(61:66),false);
+T_T1M1 = T_Move2Position_foot(p_toes(1:6),true);
+T_T2M2 = T_Move2Position_foot(p_toes(7:12),true);
+T_T3M3 = T_Move2Position_foot(p_toes(13:18),true);
+T_T4M4 = T_Move2Position_foot(p_toes(19:24),true);
+T_T5M5 = T_Move2Position_foot(p_toes(25:30),true);
+
+% -------------  move each marker -------------
+new_MK_ana.CA=(inv(T_TI2G*T_TATI*T_CATA)*MK_2b_proj.CA')';
+new_MK_ana.PT=(inv(T_TI2G*T_TATI*T_CATA)*MK_2b_proj.PT')';
+new_MK_ana.ST=(inv(T_TI2G*T_TATI*T_CATA)*MK_2b_proj.ST')';
+new_MK_ana.TN=(inv(T_TI2G*T_TATI*T_NATA)*MK_2b_proj.TN')';
+
+new_MK_ana.FMB=(inv(T_TI2G*T_TATI*T_NATA*T_M1NA)*MK_2b_proj.FMB')';
+new_MK_ana.FMH=(inv(T_TI2G*T_TATI*T_NATA*T_M1NA)*MK_2b_proj.FMH')';
+new_MK_ana.SMB=(inv(T_TI2G*T_TATI*T_NATA*T_M2NA)*MK_2b_proj.SMB')';
+new_MK_ana.SMH=(inv(T_TI2G*T_TATI*T_NATA*T_M2NA)*MK_2b_proj.SMH')';
+new_MK_ana.VMB=(inv(T_TI2G*T_TATI*T_NATA*T_M5NA)*MK_2b_proj.VMB')';
+new_MK_ana.VMH=(inv(T_TI2G*T_TATI*T_NATA*T_M5NA)*MK_2b_proj.VMH')';
+
+new_MK_ana.PM=(inv(T_TI2G*T_TATI*T_NATA*T_M1NA*T_T1M1)*MK_2b_proj.PM')';
+new_MK_ana.MM=(inv(T_TI2G)*MK_2b_proj.MM')';
+new_MK_ana.LM=(inv(T_TI2G)*MK_2b_proj.LM')';
+new_MK_ana.TT=(inv(T_TI2G)*MK_2b_proj.TT')';
+end
+
