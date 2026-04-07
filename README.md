@@ -14,7 +14,7 @@ This repository contains a multi-body model of the foot that track the spatial k
 -->
 Please cite the manuscript if you make use of these materials for your research or presentations.
 
-![synergies](./assets/synergies.gif)
+![synergies](./assets/Synergies.gif)
 
 # CONTENT
 The model is implemented in Matlab and relay on two steps:
