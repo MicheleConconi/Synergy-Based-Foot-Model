@@ -16,7 +16,7 @@ Please cite the manuscript if you make use of these materials for your research 
 
 ![synergies](./assets/synergies.gif)
 
-#CONTENT
+# CONTENT
 The model is implemented in Matlab and relay on two steps:
 
 1 - Anisotropic_scaling: The code scale all the model parameters that will be used to reconstruct. 
@@ -39,7 +39,7 @@ The code will compute as output:
 All the output will be stored in the subfolder Scaled model
 
 
-#NOTES
+# NOTES
 The folder Scaled model contain also a visualizer (SB-MKO_visualizer.exe) that provide multiple views of the analyzed motion.
 
 At this page (https://github.com/modenaxe/SynergyFootModel) it is possible to find a Matlab script that generate an OpenSim implementation of the same model, once data have been scaled through step 1.
