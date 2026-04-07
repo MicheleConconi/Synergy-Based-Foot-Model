@@ -42,4 +42,4 @@ All the output will be stored in the subfolder Scaled model
 # NOTES
 The folder Scaled model contain also a visualizer (SB-MKO_visualizer.exe) that provide multiple views of the analyzed motion.
 
-At this page (https://github.com/modenaxe/SynergyFootModel) it is possible to find a Matlab script that generate an OpenSim implementation of the same model, once data have been scaled through step 1.
+At this page (https://github.com/modenaxe/SynergyFootModel-OpenSim) it is possible to find a Matlab script that generate an OpenSim implementation of the same model, once data have been scaled through step 1.
